@@ -72,6 +72,7 @@
         const form = document.getElementById('input-form');
         const input = document.getElementById('input');
         const messages = document.getElementById('messages');
+        const apiKey = "YOUR_OPENAI_API_KEY"; // Replace with your OpenAI API key
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -79,12 +80,14 @@
             addMessage(userMessage, 'user');
             input.value = '';
 
-            const response = await fetch('https://ai.hackclub.com/chat/completions', {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
                     messages: [{ role: 'user', content: userMessage }]
                 })
             });
